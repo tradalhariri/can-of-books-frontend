@@ -6,7 +6,7 @@ import './BestBooks.css';
 class MyFavoriteBooks extends React.Component {
   render() {
     return(
-      <Jumbotron>
+      <Jumbotron style={{textAlign:"center"}}>
         <h1>My Favorite Books</h1>
         <p>
           This is a collection of my favorite books
