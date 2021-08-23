@@ -79,3 +79,39 @@ Finish time:
 Actual time needed to complete: 
 1 hour
 
+### Lab 12
+
+Name of feature:
+1. Storage: As a user, I'd like my books to persist, so that whenever I make changes, I can see the my full list of best books.
+
+Estimate of time needed to complete:
+1 hour
+
+Start time: 
+2 PM
+
+Finish time: 
+
+3 PM
+
+Actual time needed to complete: 
+1 hour
+
+
+------
+
+Name of feature:
+2. Book Component: As a user, I'd like to see my list of books, so that I can track what's impacted me, and what's recommended to me.
+
+Estimate of time needed to complete:
+1 hour
+
+Start time: 
+3 PM
+
+Finish time: 
+
+5 PM
+
+Actual time needed to complete: 
+2 hour
