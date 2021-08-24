@@ -7,12 +7,15 @@ class BookCard extends React.Component {
     constructor(props){
         super(props)
     }
+    deleteBook = ()=>{
+      this.props.deleteBook(this.props.book._id)
+    }
     render() {
-        console.log('kkkkk',this.props);
 
         return (
 
-            <Col>
+            <Col style={{position: 'relative'}}>
+            <button style={{position: 'absolute',right:'20px',top:'30px',zIndex:'5',fontSize:'32px',opacity:'0.5'}} onClick={this.deleteBook}>❌</button>
             <Card bg="secondary" text="white" style={{margin:"30px 5px"}}>
               <Card.Img variant="top" src={this.props.book.image} />
               <Card.Body>
