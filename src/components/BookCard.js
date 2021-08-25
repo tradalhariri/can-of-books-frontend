@@ -10,12 +10,18 @@ class BookCard extends React.Component {
     deleteBook = ()=>{
       this.props.deleteBook(this.props.book._id)
     }
+
+    // showModal =()=>{
+    //   this.props.showModal(this.props.book);
+    // }
     render() {
 
         return (
 
             <Col style={{position: 'relative'}}>
-            <button style={{position: 'absolute',right:'20px',top:'30px',zIndex:'5',fontSize:'32px',opacity:'0.5'}} onClick={this.deleteBook}>❌</button>
+            <button style={{position: 'absolute',right:'20px',top:'30px',zIndex:'5',fontSize:'32px',opacity:'0.5'}} onClick={this.deleteBook} >❌</button>
+
+            <button style={{position: 'absolute',left:'20px',top:'30px',zIndex:'5',fontSize:'32px',opacity:'0.5'}} onClick={()=>{this.props.showModal(this.props.book)}} >Edit the book</button>
             <Card bg="secondary" text="white" style={{margin:"30px 5px"}}>
               <Card.Img variant="top" src={this.props.book.image} />
               <Card.Body>
