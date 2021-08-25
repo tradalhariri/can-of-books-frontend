@@ -15,7 +15,12 @@ class MyFavoriteBooks extends React.Component {
     this.state = {
       booksData: [],
       user:this.props.auth0.user,
-      show:false
+      show:false,
+      change:{
+        add:false,
+        edit:false
+      },
+      bookInfo:{}
     }
 
   }
@@ -27,10 +32,24 @@ componentDidMount = async () => {
     })
   }
 
-  showModal = ()=>{
-    this.setState({
-      show:true
+  showModal = (book)=>{
+  Object.keys(book).length !== 0 ?    this.setState({
+      show:true,
+      change:{
+        add:false,
+        edit:true,
+        
+      },
+      bookInfo:book
+    }):   this.setState({
+      show:true,
+      change:{
+        add:true,
+        edit:false
+      },
+      bookInfo:{}
     })
+ 
   }
   deleteBook = async (bookID)=>{
         // let catsInfo = await axios.delete(`${process.env.REACT_APP_SERVER}/deleteCat?catID=${catID}`)
@@ -40,20 +59,39 @@ componentDidMount = async () => {
         })
 
   }
-  handleSubmit = async (e)=>{
-    e.preventDefault();
-    const bookInfo ={
-       bookName :e.target.bookName.value,
-       bookDescription :e.target.bookDescription.value,
-       bookImageUrl : e.target.bookImageUrl.value,
-       ownerEmail : this.state.user.email,
-    }
+
+
+//   editBook = async (book)=>{
+    
+//     let book = await axios.delete(`${process.env.REACT_APP_SERVER}/books/${book._id}`,);
+//     this.setState({
+//       booksData: books.data
+//     })
+
+// }
 
   
-  let books = await axios.post(`${process.env.REACT_APP_SERVER}/books`,bookInfo);
+  handleSubmit = async (e)=>{
+    e.preventDefault();
+    let bookInfo =  {
+      bookName :e.target.bookName.value,
+      bookDescription :e.target.bookDescription.value,
+      bookImageUrl : e.target.bookImageUrl.value,
+      ownerEmail : this.state.user.email,
+   };
 
-  this.setState({booksData: books.data,show:false});
+  if(this.state.change.add){
+    let books = await axios.post(`${process.env.REACT_APP_SERVER}/books`,bookInfo);
 
+    this.setState({booksData: books.data,show:false});
+  }
+  else{
+
+    let books = await axios.put(`${process.env.REACT_APP_SERVER}/books/${this.state.bookInfo._id}`,bookInfo);
+    this.setState({booksData: books.data,show:false});
+
+  }
+ 
 }
 
 handleClose = ()=>{
@@ -63,18 +101,18 @@ handleClose = ()=>{
   render() {
     return (
       <>
-         <BookFormModal show={this.state.show} handleSubmit={this.handleSubmit} handleClose={this.handleClose} />
+         <BookFormModal change={this.state.change} bookInfo ={this.state.bookInfo} show={this.state.show} handleSubmit={this.handleSubmit} handleClose={this.handleClose} />
         <Jumbotron style={{ textAlign: "center" }}>
           <h1>My Favorite Books</h1>
           <p>
             This is a collection of my favorite books
           </p>
-          <button style={{ backgroundColor: "#454545",color:"white",padding:"10px",borderRadius:"5px" }}onClick={this.showModal}   >
+          <button style={{ backgroundColor: "#454545",color:"white",padding:"10px",borderRadius:"5px" }}onClick={()=>{this.showModal({})}}   >
           Add Book
           </button>
         </Jumbotron>
         <Row xs={1} sm={2} md={3} lg={4} className="g-4">
-        {this.state.booksData.length > 0 && (this.state.booksData.map((book, idx) =>  <BookCard deleteBook={this.deleteBook} book={book} key={idx} />
+        {this.state.booksData.length > 0 && (this.state.booksData.map((book, idx) =>  <BookCard deleteBook={this.deleteBook} showModal={this.showModal} book={book} key={idx} />
         ))}
        </Row>
 
